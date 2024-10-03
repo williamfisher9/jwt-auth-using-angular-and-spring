@@ -54,10 +54,8 @@ public class AppController {
         return new ResponseEntity<>("PUBLIC CONTENTS", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/app/dashboard/{username}")
-    public ResponseEntity<UsernameDTO> getAppSecured(@PathVariable String username){
-        UsernameDTO usernameDTO = new UsernameDTO();
-        usernameDTO.setUsername(username);
+    @RequestMapping(method = RequestMethod.POST, value = "/app/dashboard")
+    public ResponseEntity<UsernameDTO> getAppSecured(@RequestBody UsernameDTO usernameDTO){
         return new ResponseEntity<>(usernameDTO, HttpStatus.OK);
     }
 

@@ -1,48 +1,34 @@
 import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
-export function authInterceptor(
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn
-) {
+export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   console.log('running interceptor');
 
+  const authToken = inject(AuthenticationService).getAuthToken();
+
   if (
-    window.localStorage.getItem('token') == null ||
-    window.localStorage.getItem('token') == ''
+    window.localStorage.getItem('token') == null || window.localStorage.getItem('token') == ''
   ) {
     req = req.clone({
-
-      headers: req.headers.append('Accept', 'application/json')
-      .append('Content-Type', 'application/json')
-      .append('Access-Control-Allow-Origin', '*')
-      .append('Access-Control-Allow-Headers', 'Content-Type')
-      .append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
-      /*setHeaders: {
+      setHeaders: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-      },*/
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'
+      },
     });
   } else {
     req = req.clone({
-      headers: req.headers.append('Accept', 'application/json')
-      .append('Content-Type', 'application/json')
-      .append('Access-Control-Allow-Origin', '*')
-      .append('Access-Control-Allow-Headers', 'Content-Type')
-      .append('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT')
-      .append('Authorization', `Bearer ${window.localStorage.getItem('token')}`)
-
-
-      /*setHeaders: {
+      setHeaders: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-        'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-      },*/
+        'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+      },
     });
   }
 

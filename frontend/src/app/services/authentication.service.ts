@@ -19,4 +19,8 @@ export class AuthenticationService {
   submitRegisterRequest(user : User) : Observable<GenericResponse>{
     return this.http.post<GenericResponse>(baseUrls.register, user).pipe(map(response => response));
   }
+
+  getAuthToken() : String | null {
+    return window.localStorage.getItem("token");
+  }
 }
