@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { baseUrls } from '../constants/constants';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of, retry } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { AuthenticationService } from './authentication.service';
 export class DahsboardService {
   constructor(private http: HttpClient, private authenticationService : AuthenticationService) {}
 
-  getUserDetails(username: string): Observable<any> {
+  getUserDetails(username: string): Observable<unknown> {
 
     const headers = new HttpHeaders()
     .set('content-type', 'application/json; charset=utf-8')
@@ -19,8 +19,7 @@ export class DahsboardService {
 
       return this.http
       .post<any>(baseUrls.dashboard, { username }, { headers })
-      .pipe(
-        map(result => {console.log(result);return result;})
-      );
+      .pipe(map(response => response.username));
   }
+
 }

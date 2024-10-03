@@ -14,10 +14,10 @@ import { DahsboardService } from '../services/dashboard.service';
 export class DashboardComponent implements OnInit{
   constructor(private dashboardService: DahsboardService) {}
 
+  username! : any;
+
   ngOnInit(): void {
-    this.dashboardService.getUserDetails("hamza.hamdan@hotmail.com").subscribe((res) => {
-      console.log(res)
-    })
+    this.dashboardService.getUserDetails("hamza.hamdan@hotmail.com").subscribe(res => this.username = res);
   }
   
 }
