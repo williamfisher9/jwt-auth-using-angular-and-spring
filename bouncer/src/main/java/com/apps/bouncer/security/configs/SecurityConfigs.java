@@ -4,6 +4,7 @@ import com.apps.bouncer.security.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,6 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +44,12 @@ public class SecurityConfigs {
         return new BCryptPasswordEncoder(8);
     }
 
+
+
+
+
+
+
     @Bean
     public AuthenticationManager getAuthenticationManager(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -45,15 +58,34 @@ public class SecurityConfigs {
         return new ProviderManager(provider);
     }
 
+
+
+
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization","content-type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
+    }
+
+
+
     @Bean
     public SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
+        http
 
-        http.csrf((csrf) -> csrf.disable())
-                .securityMatcher("/api/v1/auth/**", "/api/v1/app/**", "h2-console/**")
-                .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/api/v1/app/public", "/api/v1/auth/**", "h2-console/**").permitAll()
-                        .anyRequest().authenticated())
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf-> csrf.disable())
+
+                //.authorizeHttpRequests((request) -> request.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll())
+                .authorizeHttpRequests((request) -> request.requestMatchers("/api/v1/public/**", "/h2-console/**").permitAll())
+                .authorizeHttpRequests((request) -> request.requestMatchers("/api/v1/app/**").authenticated())
+                //.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exception) -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

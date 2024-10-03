@@ -20,7 +20,10 @@ public class User implements Serializable, UserDetails {
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String username;
+
     private String password;
 
     private boolean accountNonExpired;

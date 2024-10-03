@@ -1,0 +1,16 @@
+<div class="header-wrapper">
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="logo image" [routerLink]="['/']"/>
+        </div>
+
+        <div class="buttons-container">
+            @if(isAuthenticated){
+                <button (click)="handleLogout()">logout</button>
+            } @else { 
+                <button [routerLink]="['/login']">login</button>
+                <button [routerLink]="['/register']">register</button>
+            }
+        </div>
+    </div>
+</div>

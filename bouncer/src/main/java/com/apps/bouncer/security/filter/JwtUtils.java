@@ -6,6 +6,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.modelmapper.internal.bytebuddy.implementation.bytecode.Throw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +45,7 @@ public class JwtUtils {
         } catch (MalformedJwtException e) {
             LOG.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
-            LOG.error("JWT token is expired: {}", e.getMessage());
+            throw e;
         } catch (UnsupportedJwtException e) {
             LOG.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {

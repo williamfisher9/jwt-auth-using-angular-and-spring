@@ -1,0 +1,41 @@
+<form [formGroup]="registerForm" class="form-wrapper" (submit)="handleRegisterFormSubmission($event)">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <span id="boldLine">Sign Up</span>
+        <span>Create a new account</span>
+    </div>
+    
+    <div class="grid">
+        <div class="form-field">
+            <input type="text" id="firstName" name="firstName" autocomplete="off" formControlName="firstName"/>
+            <label for="firstName">First Name</label>
+        </div>
+    
+        <div class="form-field">
+            <input type="text" id="lastName" name="lastName" autocomplete="off" formControlName="lastName"/>
+            <label for="lastName">Last Name</label>
+        </div>
+    
+        <div class="form-field">
+            <input type="text" id="emailAddress" name="emailAddress" autocomplete="off" formControlName="username"/>
+            <label for="emailAddress">Email Address</label>
+        </div>
+    
+        <div class="empty-form-field">
+        </div>
+
+        <div class="form-field">
+            <input type="password" id="password" name="password" autocomplete="off" formControlName="password"/>
+            <label for="password">Password</label>
+        </div>
+    
+        <div class="form-field">
+            <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off"/>
+            <label for="confirmPassword">Confirm Password</label>
+        </div>
+
+    </div>
+
+    <button class="form-submit-btn">REGISTER</button>
+
+    <span>Already have an account? <a [routerLink]="['/login']">Login</a></span>
+</form>
