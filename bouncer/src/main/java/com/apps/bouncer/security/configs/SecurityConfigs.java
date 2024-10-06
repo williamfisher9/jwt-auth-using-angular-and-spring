@@ -66,7 +66,7 @@ public class SecurityConfigs {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization","content-type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);
@@ -85,7 +85,7 @@ public class SecurityConfigs {
                 //.authorizeHttpRequests((request) -> request.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll())
                 .authorizeHttpRequests((request) -> request.requestMatchers("/api/v1/public/**", "/h2-console/**").permitAll())
                 .authorizeHttpRequests((request) -> request.requestMatchers("/api/v1/app/**").authenticated())
-                //.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exception) -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

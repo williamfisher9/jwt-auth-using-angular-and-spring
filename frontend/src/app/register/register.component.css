@@ -1,6 +1,14 @@
 .grid {
     display: grid;
     grid-template-columns: auto auto;
-    row-gap: 30px;
+    row-gap: 50px;
     column-gap: 30px;
+}
+
+.form-field-select {
+    position: relative;
+    width: 400px;
+    height: 60px;
+    border: 1px solid var(--main-font-color);
+    border-radius: 5px;
 }

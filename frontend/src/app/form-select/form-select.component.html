@@ -1,0 +1,14 @@
+<div class="form-field-select" (click)="toggleSelectDisplay()">
+    <span class="selected-value">{{selectedValue}}</span>
+
+    @if (displaySelect) {
+        <div class="select-box">
+            @for (item of items; track $index) {
+                <p class="select-box-item" (click)="handleSelectedValue(item)">{{item}}</p>
+            }
+        </div>
+    }
+
+    <i [classList]="['icon fa-solid ', displaySelect ? ' fa-chevron-up' : ' fa-chevron-down']"></i>
+    <label for="rolesSelect">Role</label>
+</div>

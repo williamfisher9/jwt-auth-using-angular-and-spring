@@ -20,8 +20,9 @@
             <label for="emailAddress">Email Address</label>
         </div>
     
-        <div class="empty-form-field">
-        </div>
+        <!--<div class="empty-form-field"></div>-->
+
+        <app-form-select [items]="roles" (selectedValueEvent)="setSelectedValue($event)"></app-form-select>
 
         <div class="form-field">
             <input type="password" id="password" name="password" autocomplete="off" formControlName="password"/>
@@ -36,6 +37,10 @@
     </div>
 
     <button class="form-submit-btn">REGISTER</button>
+
+    @if (displayError) {
+        <app-error [errorCode]="errorCode" [errorMessage]="errorMessage"></app-error>
+    }
 
     <span>Already have an account? <a [routerLink]="['/login']">Login</a></span>
 </form>

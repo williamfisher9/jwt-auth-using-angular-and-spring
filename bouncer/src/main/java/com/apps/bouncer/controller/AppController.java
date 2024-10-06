@@ -3,6 +3,7 @@ package com.apps.bouncer.controller;
 import com.apps.bouncer.dao.RoleRepository;
 import com.apps.bouncer.dao.UserRepository;
 import com.apps.bouncer.dto.*;
+import com.apps.bouncer.model.Role;
 import com.apps.bouncer.security.filter.JwtUtils;
 import com.apps.bouncer.service.AuthService;
 import jakarta.validation.Valid;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -37,6 +40,11 @@ public class AppController {
         this.jwtUtils = jwtUtils;
         this.roleRepository = roleRepository;
         this.authService = authService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/public/auth/roles")
+    public ResponseEntity<List<Role>> getRoles(){
+        return new ResponseEntity<>(authService.getRoles(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/public/auth/register")

@@ -6,6 +6,7 @@ import com.apps.bouncer.dto.LoginRequestDTO;
 import com.apps.bouncer.dto.LoginResponseDTO;
 import com.apps.bouncer.dto.RegisterRequestDTO;
 import com.apps.bouncer.dto.RegisterResponseDTO;
+import com.apps.bouncer.exceptions.DuplicateUsernameException;
 import com.apps.bouncer.exceptions.RoleNotFoundException;
 import com.apps.bouncer.model.Role;
 import com.apps.bouncer.model.User;
@@ -62,6 +63,11 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public RegisterResponseDTO registerUser(RegisterRequestDTO requestDTO) {
+
+        if(userRepository.findByUsername(requestDTO.getUsername()).isPresent()){
+            throw new DuplicateUsernameException("Email address " + requestDTO.getUsername() +" already used!");
+        }
+
         Set<String> roles = requestDTO.getRoles();
         List<Role> dbRoles = roleRepository.findAll();
         Set<Role> toBeSavedRoles = new HashSet<>();
@@ -99,5 +105,10 @@ public class AuthServiceImpl implements AuthService{
         responseDTO.setStatus(200);
 
         return responseDTO;
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return roleRepository.findAll();
     }
 }

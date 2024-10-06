@@ -16,5 +16,9 @@
 
     <button class="form-submit-btn">LOGIN</button>
 
+    @if (displayError) {
+        <app-error [errorCode]="errorCode" [errorMessage]="errorMessage"></app-error>
+    }
+
     <span>Dont have an account? <a [routerLink]="['/register']" routerLinkActive="router-link-active" >Sign Up</a></span>
 </form>

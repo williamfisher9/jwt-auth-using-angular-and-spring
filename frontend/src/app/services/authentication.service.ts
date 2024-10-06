@@ -23,4 +23,8 @@ export class AuthenticationService {
   getAuthToken() : String | null {
     return window.localStorage.getItem("token");
   }
+
+  getRoles() : Observable<any> {
+    return this.http.get<any>(baseUrls.roles).pipe(map(response => response));
+  }
 }
