@@ -81,7 +81,7 @@ public class AuthServiceImpl implements AuthService{
             }
 
             if(role == null){
-                throw new RoleNotFoundException(roleName + " not found exception.");
+                throw new RoleNotFoundException(roleName + " role not found exception.");
             } else {
                 toBeSavedRoles.add(role);
             }

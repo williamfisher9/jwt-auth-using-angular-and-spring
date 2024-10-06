@@ -47,7 +47,8 @@ export class RegisterComponent implements OnInit{
     this.authenticationService.submitRegisterRequest(new User(this.registerForm.value.username!, 
       this.registerForm.value.firstName!,
       this.registerForm.value.lastName!, 
-      this.registerForm.value.password!, [this.selectedValue]))
+      this.registerForm.value.password!, 
+      [this.selectedRoleValue]))
     .subscribe({
       next: response => {console.log(response); this.router.navigate(['/login'])},
       error: err => {
@@ -59,10 +60,10 @@ export class RegisterComponent implements OnInit{
     })
   }
 
-  selectedValue : string = '';
+  selectedRoleValue : string = 'USER';
 
-  setSelectedValue(e: string) {
-    this.selectedValue = e;
+  setSelectedRoleValue(e: string) {
+    this.selectedRoleValue = e;
     console.log(e)
     }
 }

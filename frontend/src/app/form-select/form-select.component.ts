@@ -12,7 +12,8 @@ export class FormSelectComponent {
   @Output() selectedValueEvent = new EventEmitter<string>();
 
   displaySelect : boolean = false;
-  selectedValue : string = '';
+  selectedValue : string = 'USER';
+  
 
   toggleSelectDisplay() {
     this.displaySelect = !this.displaySelect;

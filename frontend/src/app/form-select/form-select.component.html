@@ -1,5 +1,5 @@
 <div class="form-field-select" (click)="toggleSelectDisplay()">
-    <span class="selected-value">{{selectedValue}}</span>
+    <span class="selected-value">{{selectedValue ? selectedValue : 'USER'}}</span>
 
     @if (displaySelect) {
         <div class="select-box">
