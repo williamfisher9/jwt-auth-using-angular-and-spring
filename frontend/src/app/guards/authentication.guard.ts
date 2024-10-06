@@ -1,10 +1,20 @@
-import { CanActivateFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 
-export const authenticationGuard: CanActivateFn = (route, state) => {
+@Injectable({
+  providedIn: 'root'
+})
 
-  if(window.localStorage.getItem("token") == null || window.localStorage.getItem("token") == ''){
-    return false;
+export class AuthenticationGuard implements CanActivate {
+
+  constructor(private router: Router) {}
+
+  canActivate(): boolean {
+    if(window.localStorage.getItem("token") == null || window.localStorage.getItem("token") == ''){
+      this.router.navigate(['/login']);
+      return false;
+    } 
+    
+    return true;
   }
-
-  return true;
-};
+}
