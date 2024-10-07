@@ -22,7 +22,7 @@
     
         <!--<div class="empty-form-field"></div>-->
 
-        <app-form-select [items]="roles" (selectedValueEvent)="setSelectedValue($event)"></app-form-select>
+        <app-form-select [items]="roles" (selectedValueEvent)="setSelectedRoleValue($event)"></app-form-select>
 
         <div class="form-field">
             <input type="password" id="password" name="password" autocomplete="off" formControlName="password"/>
